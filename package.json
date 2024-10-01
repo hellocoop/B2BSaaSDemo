@@ -1,0 +1,17 @@
+{
+  "name": "B2BSaaSDemo",
+  "version": "1.0.0",
+  "description": "This repo contains the source code powering [https://B2BSaaSDemo.com/](https://B2BSaaSDemo.com/).",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "./scripts/pre-requisites.sh",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "build": "echo \"Error: nothing to build\" && exit 0",
+    "pr": "./scripts/pr.sh",
+    "rebase": "git pull origin main --rebase",
+    "review": "npm run rebase && npm run test && npm run pr"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
