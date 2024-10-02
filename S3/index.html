@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>B2B SaaS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="https://cdn.hello.coop/images/greenfield-logo.png" />
+    <link rel="icon" href="/assets/favicon.png" />
     <link href="https://cdn.hello.coop/css/tailwind.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.hello.coop/css/hello-btn.css" />
     <script src="https://cdn.hello.coop/js/hello-btn.js"></script>
@@ -335,9 +335,9 @@
 <script>
     const $ = (id) => document.getElementById(id);
 
-    const AUTHORIZATION_ENDPOINT = "https://wallet.hello-dev.net/authorize";
-    const INTROSPECTION_ENDPOINT = "https://wallet.hello-dev.net/oauth/introspect";
-    const INVITE_ENDPOINT = "https://wallet.hello-dev.net/invite";
+    const AUTHORIZATION_ENDPOINT = "https://wallet.hello-beta.net/authorize";
+    const INTROSPECTION_ENDPOINT = "https://wallet.hello-beta.net/oauth/introspect";
+    const INVITE_ENDPOINT = "https://wallet.hello-beta.net/invite";
     const CLIENT_ID = "app_B2BSaaSDemonstrationAppX_HaQ";
 
     let data;
@@ -516,18 +516,18 @@
     async function sendEvent(body) {
         if (
             localStorage.getItem("plausible_ignore") == "true" ||
-            window.location.origin !== "https://www.greenfielddemo.com"
+            window.location.origin !== "https://www.b2bsaasdemo.com"
         ) {
             console.info("Ignoring Event: localStorage flag");
             return;
         }
         const _body = {
             w: window.innerWidth,
-            d: "greenfielddemo.com",
+            d: "b2bsaasdemo.com",
             ...body,
             n: body.n || "pageview",
             r: body.r || document.referrer || null,
-            u: new URL(body.u, "https://www.greenfielddemo.com"),
+            u: new URL(body.u, "https://www.b2bsaasdemo.com"),
         };
         try {
             await fetch("/api/event", {
