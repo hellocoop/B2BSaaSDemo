@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Greenfield Fitness</title>
+    <title>B2B SaaS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="https://cdn.hello.coop/images/greenfield-logo.png" />
     <link href="https://cdn.hello.coop/css/tailwind.css" rel="stylesheet" />
@@ -247,7 +247,7 @@
             style="width: 26rem; margin-bottom: 140px;">
             <div class="flex items-center justify-center">
                 <img src="https://cdn.hello.coop/images/greenfield-logo.png" alt="greenfield fitness" class="h-12" />
-                <span class="text-2xl ml-2 font-medium ">Greenfield Fitness</span>
+                <span class="text-2xl ml-2 font-medium ">B2B SaaS</span>
             </div>
 
             <p class="text-sm mt-2 text-gray-light">
@@ -262,10 +262,9 @@
             </div>
 
             <div id="requires-container" class="text-left rounded-md py-2 px-4 mb-6 w-3/4 mx-auto">
-                <span class="font-medium text-sm text-gray-light">Greenfield Fitness requires:</span>
+                <span class="font-medium text-sm text-gray-light">B2B SaaS requires:</span>
                 <ul class="ml-4 my-2 space-y-2 list-disc list-inside text-sm text-gray-light">
                     <li>Full Name</li>
-                    <li>Preferred Name</li>
                     <li>Verified Email</li>
                     <li>Profile Picture</li>
                 </ul>
@@ -282,7 +281,7 @@
             <div class="h-full flex items-center justify-between container px-6 sm:max-w-5xl mx-auto">
                 <div class="flex items-center justify-center">
                     <img src="https://cdn.hello.coop/images/greenfield-logo.png" alt="greenfield fitness" class="h-9" />
-                    <span class="text-xl ml-2 font-medium">Greenfield Fitness</span>
+                    <span class="text-xl ml-2 font-medium">B2B SaaS</span>
                 </div>
                 <button onClick="logout()" class="text-sm font-semibold">Log Out</button>
             </div>
@@ -312,25 +311,19 @@
                 </div>
             </div>
             
-            <div class="flex justify-between flex-wrap gap-x-2">
-                <button onclick="login({event, update: true})" id="update-email"
-                    class="mt-16 hello-btn hello-btn-white-and-static"
-                    style="padding: 10px 12px; margin-top: 10px;"
-                    data-label="ō&nbsp;&nbsp;&nbsp;Update Profile with Hellō"></button>
-                <button onclick="invite({event})" id="invite"
-                    class="mt-16 hello-btn hello-btn-white-and-static"
-                    style="padding: 10px 12px; margin-top: 10px;"
-                    data-label="ō&nbsp;&nbsp;&nbsp;Invite others to Greenfield Fitness"></button>
-            </div>
+            <button onclick="invite({event})" id="invite"
+                class="mt-16 hello-btn hello-btn-white-and-static"
+                style="padding: 10px 12px; margin-top: 10px;"
+                data-label="ō&nbsp;&nbsp;&nbsp;Invite others to B2B SaaS"></button>
         </main>
     </div>
 </body>
 <script>
     const $ = (id) => document.getElementById(id);
 
-    const AUTHORIZATION_ENDPOINT = "https://wallet.hello-beta.net/authorize";
-    const INTROSPECTION_ENDPOINT = "https://wallet.hello-beta.net/oauth/introspect";
-    const INVITE_ENDPOINT = "https://wallet.hello-beta.net/invite";
+    const AUTHORIZATION_ENDPOINT = "https://wallet.hello-dev.net/authorize";
+    const INTROSPECTION_ENDPOINT = "https://wallet.hello-dev.net/oauth/introspect";
+    const INVITE_ENDPOINT = "https://wallet.hello-dev.net/invite";
     const CLIENT_ID = "app_GreenfieldFitnessDemoApp_s9z";
 
     let data;
@@ -471,7 +464,7 @@
         url.searchParams.append("nonce", nonce);
         url.searchParams.append("response_mode", "fragment");
         url.searchParams.append("response_type", "id_token");
-        url.searchParams.append("account", "personal");
+        url.searchParams.append("account", "managed");
         url.searchParams.append("scope", "openid name nickname picture email");
         if(loginHint) {
             url.searchParams.append("login_hint", loginHint);
