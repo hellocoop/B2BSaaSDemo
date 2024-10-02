@@ -307,6 +307,10 @@
                             <h3 class="opacity-60">Email</h3>
                             <h2 class="opacity-80" id="email"></h2>
                         </div>
+                        <div>
+                            <h3 class="opacity-60">Organization</h3>
+                            <h2 class="opacity-80" id="org"></h2>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -435,14 +439,14 @@
     }
 
     function hydrate() {
-        const { name, nickname, picture, email, phone } = data;
+        const { name, picture, email, org } = data;
 
         $("full-name").innerText = name;
-        $("preferred-name").innerText = nickname;
+        $("preferred-name").innerText = name.split(" ")[0]; //tbd: hack -- not probably a good idea
         $("email").innerText = email;
         $("picture").src = picture;
         $("picture").style.backgroundImage = `url('${picture}')`;
-        // $("phone").innerText = phone;
+        $("org").innerText = org?.domain;
     }
 
     function removeLoader() {
@@ -465,7 +469,7 @@
         url.searchParams.append("response_mode", "fragment");
         url.searchParams.append("response_type", "id_token");
         url.searchParams.append("account", "managed");
-        url.searchParams.append("scope", "openid name nickname picture email");
+        url.searchParams.append("scope", "openid profile");
         if(loginHint) {
             url.searchParams.append("login_hint", loginHint);
         }
