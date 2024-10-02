@@ -66,6 +66,10 @@
             .hello-about {
                 color: white;
             }
+            
+            .managed-logo {
+                filter: invert(1);
+            }
         }
 
         .shadow-medium {
@@ -167,6 +171,10 @@
             .hello-about-container {
                 color: #d4d4d4;
             }
+
+            .managed-logo {
+                filter: invert(1);
+            }
         }
 
         .spinner {
@@ -209,7 +217,7 @@
     </style>
 </head>
 
-<body class="bg-no-repeat bg-cover">
+<body class="bg-no-repeat bg-cover bg-center">
     <!-- test-run -->
     <div id="load-spinner" class="spinner" style="display: block;"></div>
     <div id="modal-container" class="fixed w-screen h-screen hidden items-center justify-center z-50">
@@ -246,33 +254,37 @@
         <section id="login-card" class="relative z-40 bg-white flex flex-col rounded-md px-6 pt-4 pb-6 text-center"
             style="width: 26rem; margin-bottom: 140px;">
             <div class="flex items-center justify-center">
-                <img src="https://cdn.hello.coop/images/greenfield-logo.png" alt="greenfield fitness" class="h-12" />
-                <span class="text-2xl ml-2 font-medium ">B2B SaaS</span>
+                <img src="/assets/logo.png" alt="b2b saas demo" class="h-8" />
             </div>
 
-            <p class="text-sm mt-2 text-gray-light">
-                This is a demonstration app for you to experience how an app could use Hellō for registration.
+            <p class="text-sm mt-4 text-gray-light">
+                This demo app shows how you can request user information managed by an organization with Hellō.
             </p>
 
-            <div class="flex items-center justify-around my-4">
+            <!-- <div class="flex items-center justify-around my-4">
                 <img src="/assets/1.png" class="h-14" />
                 <img src="/assets/2.png" class="h-14" />
                 <img src="/assets/3.png" class="h-14" />
                 <img src="/assets/4.png" class="h-14" />
-            </div>
+            </div> -->
 
-            <div id="requires-container" class="text-left rounded-md py-2 px-4 mb-6 w-3/4 mx-auto">
-                <span class="font-medium text-sm text-gray-light">B2B SaaS requires:</span>
+            <div id="requires-container" class="text-left rounded-md py-2 px-4 my-6 mx-auto">
+                <div class="flex space-x-3 items-center">
+                    <img src="/assets/managed.png" class="h-14 managed-logo" />
+                    <span class="font-medium text-sm text-gray-light">
+                        B2B SaaS requires logging in with an account from an employer, school, or other organization.
+                    </span>
+                </div>
+                <span class="font-medium text-sm text-gray-light mt-3 block">It requests the following data:</span>
                 <ul class="ml-4 my-2 space-y-2 list-disc list-inside text-sm text-gray-light">
                     <li>Full Name</li>
-                    <li>Verified Email</li>
+                    <li>Verified Managed Email</li>
                     <li>Profile Picture</li>
                 </ul>
             </div>
 
             <div class="hello-container">
-                <button onclick="login({event})" class="hello-btn hello-btn-black-on-light w-full" />
-                <button class="hello-about" />
+                <button onclick="login({event})" class="hello-btn hello-btn-black-on-light w-full"></button>
             </div>
         </section>
     </div>
@@ -280,54 +292,52 @@
         <header class="h-14 shadow-medium fixed w-full z-40">
             <div class="h-full flex items-center justify-between container px-6 sm:max-w-5xl mx-auto">
                 <div class="flex items-center justify-center">
-                    <img src="https://cdn.hello.coop/images/greenfield-logo.png" alt="greenfield fitness" class="h-9" />
-                    <span class="text-xl ml-2 font-medium">B2B SaaS</span>
+                    <img src="/assets/logo.png" alt="b2b saas demo" class="h-8" />
                 </div>
-                <button onClick="logout()" class="text-sm font-semibold">Log Out</button>
+                <button onClick="logout()" class="text-sm font-semibold">Log out</button>
             </div>
         </header>
         <main id="profile-page-content" style="display: none;" class="container px-6 sm:max-w-5xl mx-auto pt-20 pb-20">
             <div class="relative flex flex-col items-start sm:items-center">
-                <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1649&q=80"
+                <img src="/assets/bg.jpg"
                     class="h-36 sm:h-64 w-full rounded-md object-cover" />
                 <div id="picture"
                     class="shadow-medium border-4 border-white h-20 w-20 sm:h-36 sm:w-36 rounded-md -mt-12 sm:-mt-16 ml-4 sm:ml-0 bg-gray-200 bg-no-repeat bg-cover bg-center">
                 </div>
             </div>
-            <h1 class="greeting absolute text-xl sm:text-2xl font-medium ml-28 sm:ml-0">Hellō <span
-                    id="preferred-name"></span>!</h1>
             <div class="flex flex-col space-y-8 md:space-y-0 md:flex-row md:space-x-8 mt-10">
-                <div class="card w-full p-4 rounded-md shadow-medium text-lg font-medium">
+                <div class="card w-full p-4 rounded-md shadow-medium text-lg font-medium -mt-24">
                     <div class="space-y-4">
                         <div>
                             <h3 class="opacity-60">Full Name</h3>
-                            <h2 class="opacity-80" id="full-name"></h2>
+                            <h2 class="opacity-80 ml-4" id="full-name"></h2>
                         </div>
                         <div>
                             <h3 class="opacity-60">Email</h3>
-                            <h2 class="opacity-80" id="email"></h2>
+                            <h2 class="opacity-80 ml-4" id="email"></h2>
                         </div>
                         <div>
                             <h3 class="opacity-60">Organization</h3>
-                            <h2 class="opacity-80" id="org"></h2>
+                            <h2 class="opacity-80 ml-4 mt-2" id="org-domain"></h2>
+                            <h2 class="opacity-80 ml-4 mt-2" id="org-id"></h2>
                         </div>
                     </div>
                 </div>
             </div>
             
             <button onclick="invite({event})" id="invite"
-                class="mt-16 hello-btn hello-btn-white-and-static"
-                style="padding: 10px 12px; margin-top: 10px;"
-                data-label="ō&nbsp;&nbsp;&nbsp;Invite others to B2B SaaS"></button>
+                class="mt-6 hello-btn hello-btn-white-and-static"
+                style="padding: 10px 12px;"
+                data-label="ō&nbsp;&nbsp;&nbsp;Invite others to B2B SaaS Demo"></button>
         </main>
     </div>
 </body>
 <script>
     const $ = (id) => document.getElementById(id);
 
-    const AUTHORIZATION_ENDPOINT = "https://wallet.hello-beta.net/authorize";
-    const INTROSPECTION_ENDPOINT = "https://wallet.hello-beta.net/oauth/introspect";
-    const INVITE_ENDPOINT = "https://wallet.hello-beta.net/invite";
+    const AUTHORIZATION_ENDPOINT = "https://wallet.hello-dev.net/authorize";
+    const INTROSPECTION_ENDPOINT = "https://wallet.hello-dev.net/oauth/introspect";
+    const INVITE_ENDPOINT = "https://wallet.hello-dev.net/invite";
     const CLIENT_ID = "app_B2BSaaSDemonstrationAppX_HaQ";
 
     let data;
@@ -442,11 +452,11 @@
         const { name, picture, email, org } = data;
 
         $("full-name").innerText = name;
-        $("preferred-name").innerText = name.split(" ")[0]; //tbd: hack -- not probably a good idea
         $("email").innerText = email;
         $("picture").src = picture;
         $("picture").style.backgroundImage = `url('${picture}')`;
-        $("org").innerText = org?.domain;
+        $("org-id").innerText = org?.id;
+        $("org-domain").innerText = org?.domain;
     }
 
     function removeLoader() {
@@ -500,7 +510,7 @@
         $("login-page").style.visibility = "visible";
         $("login-page").style.position = "relative";
         $("profile-page-content").style.display = "none";
-        document.body.style.backgroundImage = "url(https://images.unsplash.com/photo-1521804906057-1df8fdb718b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1650&q=80)";
+        document.body.style.backgroundImage = "url(/assets/bg.jpg)";
     }
 
     async function sendEvent(body) {
