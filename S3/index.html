@@ -478,7 +478,7 @@
         url.searchParams.append("nonce", nonce);
         url.searchParams.append("response_mode", "fragment");
         url.searchParams.append("response_type", "id_token");
-        url.searchParams.append("account", "managed");
+        url.searchParams.append("domain_hint", "managed");
         url.searchParams.append("scope", "openid profile");
         if(loginHint) {
             url.searchParams.append("login_hint", loginHint);
