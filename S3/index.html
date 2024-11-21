@@ -8,12 +8,13 @@
     <link rel="icon" href="/assets/favicon.png" />
     <link rel="stylesheet" type="text/css" href="https://cdn.hello.coop/css/hello-btn.css" />
     <script src="https://cdn.hello.coop/js/hello-btn.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DsgnAd37.css">
+  <script type="module" crossorigin src="/assets/index-CsGgHytc.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BTzaTAIG.css">
 </head>
 
 <body class="bg-no-repeat bg-cover bg-center">
-    <!-- test-run -->
     <div id="load-spinner" class="spinner" style="display: block;"></div>
+
     <div id="modal-container" class="fixed w-screen h-screen hidden items-center justify-center z-50">
         <div id="modal" class="p-4 rounded-md w-96 z-50 flex relative">
             <div class="w-10 h-10 bg-red-500 bg-opacity-20 rounded-full inline-flex items-center justify-center">
@@ -25,7 +26,7 @@
             </div>
             <div class="flex flex-col ml-4">
                 <h4 class="font-medium">Error</h4>
-                <button onclick="closeModal()" class="absolute right-4">
+                <button id="close-modal-btn" class="absolute right-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -39,9 +40,9 @@
                 </div>
             </div>
         </div>
-        <div onclick="closeModal()"
-            class="fixed w-screen h-screen z-40 flex items-center justify-center bg-black bg-opacity-60"></div>
+        <div class="fixed w-screen h-screen z-40 flex items-center justify-center bg-black bg-opacity-60"></div>
     </div>
+
     <div id="login-page" style="visibility: hidden; position: absolute;"
         class="px-10 py-16 h-auto flex flex-col justify-center items-center">
         <div class="bg-black w-full z-10 h-screen fixed inset-0 bg-opacity-50" aria-hidden="true"></div>
@@ -54,13 +55,6 @@
             <p class="text-sm mt-4 text-gray-light">
                 This demo app shows how you can request user information managed by an organization with Hellō.
             </p>
-
-            <!-- <div class="flex items-center justify-around my-4">
-                <img src="/assets/1.png" class="h-14" />
-                <img src="/assets/2.png" class="h-14" />
-                <img src="/assets/3.png" class="h-14" />
-                <img src="/assets/4.png" class="h-14" />
-            </div> -->
 
             <div id="requires-container" class="text-left rounded-md py-2 px-4 my-6 mx-auto">
                 <div class="flex space-x-3 items-center">
@@ -78,29 +72,29 @@
             </div>
 
             <div class="hello-container">
-                <button onclick="login({event})" class="hello-btn hello-btn-black-on-light w-full"></button>
+                <button id="login-btn" class="hello-btn hello-btn-black-on-light w-full"></button>
             </div>
         </section>
     </div>
+
     <div id="profile-page" class="h-screen" style="display: none;">
         <header class="h-14 shadow-medium fixed w-full z-40">
             <div class="h-full flex items-center justify-between container px-6 sm:max-w-5xl mx-auto">
                 <div class="flex items-center justify-center">
                     <img src="/assets/logo.png" alt="b2b saas demo" class="h-8" />
                 </div>
-                <button onClick="logout()" class="text-sm font-semibold">Log out</button>
+                <button id="logout-btn" class="text-sm font-semibold">Log out</button>
             </div>
         </header>
         <main id="profile-page-content" style="display: none;" class="container px-6 sm:max-w-5xl mx-auto pt-20 pb-20">
             <div class="relative flex flex-col items-start sm:items-center">
-                <img src="/assets/bg.jpg"
-                    class="h-36 sm:h-64 w-full rounded-md object-cover" />
+                <img src="/assets/bg.jpg" class="h-36 sm:h-64 w-full rounded-md object-cover" />
                 <div id="picture"
                     class="shadow-medium border-4 border-white h-20 w-20 sm:h-36 sm:w-36 rounded-md -mt-12 sm:-mt-16 ml-4 sm:ml-0 bg-gray-200 bg-no-repeat bg-cover bg-center">
                 </div>
             </div>
             <div class="flex flex-col space-y-8 md:space-y-0 md:flex-row md:space-x-8 mt-10">
-                <div class="card w-full p-4 rounded-md shadow-medium text-lg font-medium -mt-24">
+                <div class="card w-full p-4 rounded-md shadow-medium text-lg font-medium -mt-6 sm:-mt-24">
                     <div class="space-y-4">
                         <div>
                             <h3 class="opacity-60">Full Name</h3>
@@ -110,7 +104,7 @@
                             <h3 class="opacity-60">Email</h3>
                             <h2 class="opacity-80 ml-4" id="email"></h2>
                         </div>
-                        <div>
+                        <div id="org-container">
                             <h3 class="opacity-60">Organization</h3>
                             <h2 class="opacity-80 ml-4 mt-2" id="org-domain"></h2>
                             <h2 class="opacity-80 ml-4 mt-2" id="org-id"></h2>
@@ -118,264 +112,12 @@
                     </div>
                 </div>
             </div>
-            
-            <button onclick="invite({event})" id="invite"
-                class="mt-6 hello-btn hello-btn-white-and-static"
-                style="padding: 10px 12px;"
+
+            <button id="invite-btn" class="mt-6 hello-btn hello-btn-white-and-static" style="padding: 10px 12px;"
                 data-label="ō&nbsp;&nbsp;&nbsp;Invite others to B2B SaaS Demo"></button>
         </main>
     </div>
+
 </body>
-<script>
-    const $ = (id) => document.getElementById(id);
-
-    const AUTHORIZATION_ENDPOINT = "https://wallet.hello.coop/authorize";
-    const INTROSPECTION_ENDPOINT = "https://wallet.hello.coop/oauth/introspect";
-    const INVITE_ENDPOINT = "https://wallet.hello.coop/invite";
-    const CLIENT_ID = "app_B2BSaaSDemonstrationAppX_HaQ";
-
-    let data;
-
-    window.onload = async () => {
-        const search = window.location.search
-        const hash = window.location.hash.substring(1)
-        const params = new URLSearchParams(search || hash);
-        
-        if (params.has("iss")) {
-            return login({
-                loginHint: params.get('login_hint'),
-                domainHint: params.get('domain_hint')
-            });
-        } else if (params.has("id_token")) {
-            const id_token = params.get("id_token");
-            getInfo(id_token);
-        } else if (params.has("error")) {
-            user_data = {
-                error: params.get("error"),
-                error_description: params.get("error_description"),
-                error_uri: params.get("error_uri"),
-            };
-
-            $("modal-container").style.display = "flex";
-
-            if (user_data.error) {
-                $("error-container").style.display = "block";
-                switch (user_data.error) {
-                    case "access_denied":
-                        $("error").innerText = "User cancelled request.";
-                        break;
-                    default:
-                        $("error").innerText = "Something went wrong.";
-                }
-            }
-
-            if (user_data.error_description) {
-                $("error-description-container").style.display = "block";
-                switch (user_data.error_description) {
-                    default:
-                        $("error").innerText = "Something went wrong.";
-                }
-            }
-
-            if (sessionStorage.getItem("data")) {
-                getInfoFromSessionStorage()
-            } else {
-                showLoginPage();
-            }
-        } else if (sessionStorage.getItem("data")) {
-            getInfoFromSessionStorage()
-        } else {
-            showLoginPage();
-        }
-
-        clearFragment();
-        removeLoader();
-    };
-
-    function uuidv4() {
-        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
-    }
-
-    function getInfoFromSessionStorage() {
-        try {
-            data = JSON.parse(sessionStorage.getItem("data"));
-            hydrate();
-            $("profile-page").style.display = $("profile-page-content").style.display = "block";
-        } catch (err) {
-            console.log(err);
-            sessionStorage.removeItem("data");
-            showLoginPage();
-        }
-    }
-
-    async function getInfo(id_token) {
-        const nonce = sessionStorage.getItem("nonce");
-        await fetch(INTROSPECTION_ENDPOINT, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: `id_token=${id_token}&nonce=${nonce}&client_id=${CLIENT_ID}`,
-        })
-            .then((r) => r.json())
-            .then((json) => {
-                if (!json.active) throw json
-                data = json
-                sessionStorage.setItem("data", JSON.stringify(data));
-                sendEvent({ u: "/profile" });
-                hydrate();
-                $("profile-page").style.display = $("profile-page-content").style.display = "block";
-            })
-            .catch((err) => {
-                console.error(err);
-                showLoginPage();
-            })
-    }
-
-    function clearFragment() {
-        if (!window.location.hash) return;
-        window.location.replace("#");
-        // slice off the remaining '#' in HTML5:
-        if (typeof window.history.replaceState == "function") {
-            history.replaceState({}, "", window.location.href.slice(0, -1));
-        }
-    }
-
-    function closeModal() {
-        $("modal-container").style.display = "none";
-    }
-
-    function hydrate() {
-        const { name, picture, email, org } = data;
-
-        $("full-name").innerText = name;
-        $("email").innerText = email;
-        $("picture").src = picture;
-        $("picture").style.backgroundImage = `url('${picture}')`;
-        $("org-id").innerText = org?.id;
-        $("org-domain").innerText = org?.domain;
-    }
-
-    function removeLoader() {
-        $("load-spinner").style.display = "none"
-    }
-
-    async function login({ event = null, update = false, loginHint = '', domainHint = '' } = {}) {
-        if (event) {
-            event.target.classList.add('hello-btn-loader')
-            event.target.disabled = true
-        }
-
-        const nonce = uuidv4();
-        sessionStorage.setItem("nonce", nonce);
-
-        const url = new URL(AUTHORIZATION_ENDPOINT);
-        url.searchParams.append("client_id", CLIENT_ID);
-        url.searchParams.append("redirect_uri", window.location.origin + window.location.pathname);
-        url.searchParams.append("nonce", nonce);
-        url.searchParams.append("response_mode", "fragment");
-        url.searchParams.append("response_type", "id_token");
-        url.searchParams.append("domain_hint", "managed");
-        url.searchParams.append("scope", "openid profile");
-        if(loginHint) {
-            url.searchParams.append("login_hint", loginHint);
-        }
-        if(domainHint) { //set only in idp login flow
-                //searchParams.set because we are replacing existing domain_hint value
-            url.searchParams.set("domain_hint", domainHint);
-        }
-        if (update) {
-            url.searchParams.append("prompt", "consent");
-            await sendEvent({ u: "/update", n: "action" });
-        } else {
-            await sendEvent({ u: "/start/login", n: "action" });
-        }
-        window.location.href = url;
-    }
-
-    function logout() {
-        sendEvent({ u: "/logout", n: "action" });
-        sessionStorage.removeItem("data");
-        $("profile-page").style.display = "none";
-        showLoginPage();
-    }
-
-    function showLoginPage() {
-        let u = '/'
-        if (window.location.search) {
-            u += window.location.search
-        }
-        sendEvent({ u })
-        //THIS IS A HACK ALTTERNATIVE FOR DISPLAY: NONE. 
-        //DISPLAY: NONE CAUSES A BUG WHERE HELLO-BUTTON JS IS UNABLE TO ADD EVENT LISTENERS TO THE TOOLTIP
-        $("login-page").style.visibility = "visible";
-        $("login-page").style.position = "relative";
-        $("profile-page-content").style.display = "none";
-        document.body.style.backgroundImage = "url(/assets/bg.jpg)";
-    }
-
-    async function sendEvent(body) {
-        if (
-            localStorage.getItem("plausible_ignore") == "true" ||
-            window.location.origin !== "https://www.b2bsaasdemo.com"
-        ) {
-            console.info("Ignoring Event: localStorage flag");
-            return;
-        }
-        const _body = {
-            w: window.innerWidth,
-            d: "b2bsaasdemo.com",
-            ...body,
-            n: body.n || "pageview",
-            r: body.r || document.referrer || null,
-            u: new URL(body.u, "https://www.b2bsaasdemo.com"),
-        };
-        try {
-            await fetch("/api/event", {
-                method: "POST",
-                body: JSON.stringify(_body),
-            });
-            console.info(`Event sent: ${_body.u} (${_body.n})`);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    async function invite({event = null} = {}) {
-        if (event) {
-            event.target.classList.add('hello-btn-loader')
-            event.target.disabled = true
-        }
-
-        const url = new URL(INVITE_ENDPOINT);
-        let sub;
-        try {
-            sub = JSON.parse(sessionStorage.data).sub
-        } catch(err) {
-            console.error('Error fetching sub from sessionStorage')
-            return logout();
-        }
-
-        url.searchParams.append("inviter", sub);
-        url.searchParams.append("client_id", CLIENT_ID);
-        url.searchParams.append("initiate_login_uri", window.location.origin);
-        url.searchParams.append("return_uri", window.location.origin);
-        window.location.href = url.href;
-    }
-</script>
-<script>
-    /**
-     * If browser back button was used, flush cache
-     * This ensures that user will always see an accurate, up-to-date view based on their state
-     * https://stackoverflow.com/questions/8788802/prevent-safari-loading-from-cache-when-back-button-is-clicked
-     */
-    (function () {
-        window.onpageshow = function (event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
-        };
-    })();
-</script>
 
 </html>
