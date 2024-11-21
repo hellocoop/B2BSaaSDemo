@@ -20,7 +20,7 @@ const modalContainer = document.querySelector('#modal-container');
 const errorContainer = document.querySelector('#error-container');
 const errorField = document.querySelector('#error');
 const orgDomainField = document.querySelector('#org-domain');
-const orgIdField     = document.querySelector('#org-id');
+const orgIdField = document.querySelector('#org-id');
 const fullNameField = document.querySelector('#full-name');
 const emailField = document.querySelector('#email');
 const pictureField = document.querySelector('#picture');
@@ -94,10 +94,10 @@ async function processCode(params) {
             wallet: 'https://wallet.hello-dev.net/'
         });
         const { payload: profile } = parseToken(token);
-    
+
         // clean code_verifier, nonce
         sessionStorage.clear();
-    
+
         sessionStorage.setItem('profile', JSON.stringify(profile));
         sendPlausibleEvent({ u: '/profile' });
         showProfile(profile);
