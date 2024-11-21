@@ -25,6 +25,7 @@ const fullNameField = document.querySelector('#full-name');
 const emailField = document.querySelector('#email');
 const pictureField = document.querySelector('#picture');
 const loadSpinner = document.querySelector('#load-spinner');
+const orgContainer = document.querySelector('#org-container');
 const closeModalBtn = document.querySelector('#close-modal-btn');
 
 // bindings
@@ -188,8 +189,12 @@ function showProfile(profile) {
     emailField.innerText = email;
     pictureField.src = picture;
     pictureField.style.backgroundImage = `url('${picture}')`;
-    orgDomainField.innerText = org.domain
-    orgIdField.innerText = org.id
+    if (org) {
+        orgDomainField.innerText = org?.domain
+        orgIdField.innerText = org?.id
+    } else {
+        orgContainer.style.display = "none"
+    }
     profilePage.style.display = profilePageContent.style.display = 'block';
 }
 
