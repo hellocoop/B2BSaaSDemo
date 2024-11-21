@@ -1,17 +1,17 @@
 import { createAuthRequest, fetchToken, parseToken } from '@hellocoop/helper-browser';
 
 const CONFIG = {
-    client_id: 'app_GreenfieldFitnessDemoApp_s9z',
-    redirect_uri: 'https://www.greenfielddemo.com/',
-    scope: ['openid', 'profile', 'nickname'],
+    client_id: 'app_B2BSaaSDemonstrationAppX_HaQ',
+    redirect_uri: 'http://localhost:5173/',
+    scope: ['openid', 'profile'],
     response_mode: 'fragment',
-    domain_hint: 'personal',
+    domain_hint: 'managed',
+    wallet: 'https://wallet.hello-dev.net/'
 };
 
 // refs
 const loginBtn = document.querySelector('#login-btn');
 const logoutBtn = document.querySelector('#logout-btn');
-const updateBtn = document.querySelector('#update-btn');
 const inviteBtn = document.querySelector('#invite-btn');
 const profilePage = document.querySelector('#profile-page');
 const loginPage = document.querySelector('#login-page');
@@ -19,8 +19,9 @@ const profilePageContent = document.querySelector('#profile-page-content');
 const modalContainer = document.querySelector('#modal-container');
 const errorContainer = document.querySelector('#error-container');
 const errorField = document.querySelector('#error');
+const orgDomainField = document.querySelector('#org-domain');
+const orgIdField     = document.querySelector('#org-id');
 const fullNameField = document.querySelector('#full-name');
-const preferredNameField = document.querySelector('#preferred-name');
 const emailField = document.querySelector('#email');
 const pictureField = document.querySelector('#picture');
 const loadSpinner = document.querySelector('#load-spinner');
@@ -30,7 +31,6 @@ const closeModalBtn = document.querySelector('#close-modal-btn');
 window.addEventListener('load', onLoad);
 loginBtn.addEventListener('click', login);
 logoutBtn.addEventListener('click', logout);
-updateBtn.addEventListener('click', update);
 inviteBtn.addEventListener('click', invite);
 closeModalBtn.addEventListener('click', closeModal);
 
@@ -64,6 +64,7 @@ async function login(_, params) {
         // set only in idp flow
         login_hint: params?.get('login_hint') || undefined,
         domain_hint: params?.get('domain_hint') || CONFIG.domain_hint,
+        wallet: 'https://wallet.hello-dev.net/'
     });
 
     // needed later for fetching the token
@@ -71,24 +72,6 @@ async function login(_, params) {
     sessionStorage.setItem('code_verifier', code_verifier);
 
     await sendPlausibleEvent({ u: '/start/login', n: 'action' });
-
-    window.location.href = url;
-}
-
-async function update() {
-    updateBtn.classList.add('hello-btn-loader');
-    updateBtn.disabled = true;
-
-    const { url, nonce, code_verifier } = await createAuthRequest({
-        ...CONFIG,
-        prompt: 'consent',
-    });
-
-    // needed later for fetching the token
-    sessionStorage.setItem('nonce', nonce);
-    sessionStorage.setItem('code_verifier', code_verifier);
-
-    await sendPlausibleEvent({ u: '/update', n: 'action' });
 
     window.location.href = url;
 }
@@ -107,6 +90,7 @@ async function processCode(params) {
             code_verifier: sessionStorage.getItem('code_verifier'),
             nonce: sessionStorage.getItem('nonce'),
             code: params.get('code'),
+            wallet: 'https://wallet.hello-dev.net/'
         });
         const { payload: profile } = parseToken(token);
     
@@ -172,18 +156,18 @@ function showLoginPage() {
 async function sendPlausibleEvent(body) {
     if (
         localStorage.getItem('plausible_ignore') == 'true'
-        || window.location.origin !== 'https://www.greenfielddemo.com'
+        || window.location.origin !== 'https://www.b2bsaasdemo.com'
     ) {
         console.info('Ignoring Event: localStorage flag');
         return;
     }
     const _body = {
         w: window.innerWidth,
-        d: 'greenfielddemo.com',
+        d: 'b2bsaasdemo.com',
         ...body,
         n: body.n || 'pageview',
         r: body.r || document.referrer || null,
-        u: new URL(body.u, 'https://www.greenfielddemo.com'),
+        u: new URL(body.u, 'https://www.b2bsaasdemo.com'),
     };
     try {
         await fetch('/api/event', {
@@ -198,13 +182,14 @@ async function sendPlausibleEvent(body) {
 
 function showProfile(profile) {
     const {
-        name, nickname, picture, email,
+        name, picture, email, org
     } = profile;
     fullNameField.innerText = name;
-    preferredNameField.innerText = nickname;
     emailField.innerText = email;
     pictureField.src = picture;
     pictureField.style.backgroundImage = `url('${picture}')`;
+    orgDomainField.innerText = org.domain
+    orgIdField.innerText = org.id
     profilePage.style.display = profilePageContent.style.display = 'block';
 }
 
@@ -223,7 +208,7 @@ async function invite() {
     // })
     // window.location.href = url.href;
 
-    const url = new URL('https://wallet.hello.coop/invite');
+    const url = new URL('https://wallet.hello-dev.net/invite');
 
     url.searchParams.append('inviter', sub);
     url.searchParams.append('client_id', CONFIG.client_id);
