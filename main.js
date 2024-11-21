@@ -2,11 +2,10 @@ import { createAuthRequest, fetchToken, parseToken } from '@hellocoop/helper-bro
 
 const CONFIG = {
     client_id: 'app_B2BSaaSDemonstrationAppX_HaQ',
-    redirect_uri: 'http://localhost:5173/',
+    redirect_uri: 'https://www.b2bsaasdemo.com/',
     scope: ['openid', 'profile'],
     response_mode: 'fragment',
-    domain_hint: 'managed',
-    wallet: 'https://wallet.hello-dev.net/'
+    domain_hint: 'managed'
 };
 
 // refs
@@ -64,8 +63,7 @@ async function login(_, params) {
 
         // set only in idp flow
         login_hint: params?.get('login_hint') || undefined,
-        domain_hint: params?.get('domain_hint') || CONFIG.domain_hint,
-        wallet: 'https://wallet.hello-dev.net/'
+        domain_hint: params?.get('domain_hint') || CONFIG.domain_hint
     });
 
     // needed later for fetching the token
@@ -90,8 +88,7 @@ async function processCode(params) {
             redirect_uri: CONFIG.redirect_uri,
             code_verifier: sessionStorage.getItem('code_verifier'),
             nonce: sessionStorage.getItem('nonce'),
-            code: params.get('code'),
-            wallet: 'https://wallet.hello-dev.net/'
+            code: params.get('code')
         });
         const { payload: profile } = parseToken(token);
 
@@ -213,7 +210,7 @@ async function invite() {
     // })
     // window.location.href = url.href;
 
-    const url = new URL('https://wallet.hello-dev.net/invite');
+    const url = new URL('https://wallet.hello.coop/invite');
 
     url.searchParams.append('inviter', sub);
     url.searchParams.append('client_id', CONFIG.client_id);
