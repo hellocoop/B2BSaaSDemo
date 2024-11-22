@@ -178,7 +178,7 @@ function showLoginPage() {
 }
 
 const plausibleIgnore = localStorage.getItem('plausible_ignore') == 'true' 
-    || window.location.origin !== 'https://www.greenfielddemo.com';
+    || window.location.origin !== 'https://www.b2bsaasdemo.com';
 
 async function sendPlausibleEvent(pEvent) {
     if (plausibleIgnore)
@@ -186,10 +186,10 @@ async function sendPlausibleEvent(pEvent) {
 
     const { path, n = 'pageview' } = pEvent;
 
-    const u = new URL(path, 'https://www.greenfielddemo.com') 
+    const u = new URL(path, 'https://www.b2bsaasdemo.com') 
     const body = { u, n, 
         w: window.innerWidth,
-        d: 'greenfielddemo.com',
+        d: 'b2bsaasdemo.com',
         r: document.referrer || null,
     };
     try {
