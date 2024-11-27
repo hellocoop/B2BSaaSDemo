@@ -125,8 +125,6 @@ async function processCode(params) {
         sessionStorage.clear();
         showLoginPage();
         processError(params);
-    } finally {
-        clearFragment();
     }
 }
 
