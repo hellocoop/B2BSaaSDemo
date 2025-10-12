@@ -202,14 +202,14 @@ async function sendPlausibleEvent(pEvent) {
 }
 
 function showProfile(profile) {
-    const { name, picture, email, org } = profile;
+    const { name, picture, email, tenant } = profile;
     fullNameField.innerText = name;
     emailField.innerText = email;
     pictureField.src = picture;
     pictureField.style.backgroundImage = `url('${picture}')`;
     if (tenant) {
         // orgDomainField.innerText = org?.domain
-        orgIdField.innerText = org?.tenant
+        orgIdField.innerText = tenant
     } else {
         orgContainer.style.display = "none"
     }
