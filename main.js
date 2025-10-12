@@ -207,9 +207,9 @@ function showProfile(profile) {
     emailField.innerText = email;
     pictureField.src = picture;
     pictureField.style.backgroundImage = `url('${picture}')`;
-    if (org) {
-        orgDomainField.innerText = org?.domain
-        orgIdField.innerText = org?.id
+    if (tenant) {
+        // orgDomainField.innerText = org?.domain
+        orgIdField.innerText = org?.tenant
     } else {
         orgContainer.style.display = "none"
     }
