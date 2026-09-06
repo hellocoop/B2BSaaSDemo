@@ -7,7 +7,7 @@ This repo contains the source code powering [https://B2BSaaSDemo.com/](https://B
 ### Prerequisites
 
 1. Git
-1. Node (>=16.0.0), npm (>=7.0.0)
+1. Node (>=24.0.0), npm (>=11.0.0)
 1. A fork of the repo (for any contributions)
 1. A clone of the [B2BSaaSDemo repo](https://github.com/hellocoop/b2bsaasdemo) on your local machine
 
